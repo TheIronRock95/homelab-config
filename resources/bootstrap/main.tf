@@ -98,7 +98,7 @@ module "talos" {
 
 # module "proxmox_csi_plugin" {
 #   depends_on = [module.talos]
-#   source = "./bootstrap/proxmox-csi-plugin"
+#   source = "./proxmox-csi-plugin"
 
 #   providers = {
 #     proxmox    = proxmox
