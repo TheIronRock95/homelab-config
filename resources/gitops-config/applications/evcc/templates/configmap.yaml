@@ -1,0 +1,8 @@
+{{ range .Values.configmap }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .name }}
+data: {{ .data | toYaml | nindent 2}}
+{{ end }}

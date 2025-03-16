@@ -1,0 +1,27 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  name: pi-hole
+  namespace: argocd 
+  labels:
+    component: applications
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: applications
+  source:
+    repoURL: https://github.com/TheIronRock95/homelab-kube-cluster.git
+    path: applications/pi-hole
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pi-hole
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

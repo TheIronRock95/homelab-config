@@ -1,0 +1,7 @@
+external-secrets:
+
+  tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule

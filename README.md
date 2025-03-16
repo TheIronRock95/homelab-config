@@ -1,11 +1,11 @@
 # My Homelab Configuration
 
-This repository contains the configuration for my homelab, including the **Tofu bootstrap** and **Argo CD setup**.
+This repository contains the configuration for my homelab, including the **Infrastructure Bootstrap** and **GitOps Deployment Setup**.
 
 ## Overview
 
-- **Tofu Bootstrap**: Automates the provisioning of infrastructure components.
-- **Argo CD Configuration**: Manages Kubernetes applications using GitOps principles.
+- **Infrastructure Bootstrap**: Automates the provisioning of infrastructure components.
+- **GitOps Deployment Setup**: Manages Kubernetes applications using GitOps principles.
 
 ## Setup & Usage
 

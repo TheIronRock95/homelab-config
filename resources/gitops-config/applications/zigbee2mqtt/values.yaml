@@ -1,0 +1,201 @@
+zigbee2mqtt:
+  #
+  # IMPORTANT NOTE
+  #
+  # This chart inherits from our common library chart. You can check the default values/options here:
+  # https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+  #
+
+  image:
+    # -- image repository
+    repository: koenkk/zigbee2mqtt
+    # -- image tag
+    tag: 1.42.0
+    # -- image pull policy
+    pullPolicy: IfNotPresent
+
+  # -- environment variables. See [image docs](https://www.zigbee2mqtt.io/information/configuration.html#override-via-environment-variables) for more details.
+  # @default -- See below
+  env:
+    # -- Set the data folder for Zigbee2MQTT.
+    ZIGBEE2MQTT_DATA: /data
+    TZ: "Europe/Amsterdam"
+
+  # -- Probe configuration
+  # -- [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+  # @default -- See below
+  probes:
+    # -- Liveness probe configuration
+    # @default -- See below
+    liveness:
+      # -- Enable the liveness probe
+      enabled: false
+
+
+    # -- Redainess probe configuration
+    # @default -- See below
+    readiness:
+      # -- Enable the readiness probe
+      enabled: false
+
+    # -- Startup probe configuration
+    # @default -- See below
+    startup:
+      # -- Enable the startup probe
+      enabled: false
+
+  # -- Configures service settings for the chart. Normally this does not need to be modified.
+  # @default -- See values.yaml
+  service:
+    main:
+      ports:
+        http:
+          port: 8099
+
+  ingress:
+    # -- Enable and configure ingress settings for the chart under this key.
+    # @default -- See values.yaml
+    main:
+      enabled: true
+      ingressClassName: traefik-internal
+      hosts:
+        -  # -- Host address. Helm template can be passed.
+          host: zigbee.local.damman.tech
+          ## Configure the paths for the host
+          paths:
+            -  # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+              service:
+                # -- Overrides the service name reference for this path
+                name: zigbee2mqtt
+                # -- Overrides the service port reference for this path
+                port: 8099
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      tls:
+        - secretName: zigbee.local.damman.tech-tls 
+          hosts:
+            - zigbee.local.damman.tech
+
+  securityContext:
+    # -- (bool) Privileged securityContext may be required if USB controller is accessed directly through the host machine
+    privileged: true
+
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    data:
+      enabled: true
+      mountPath: /data
+      accessMode: ReadWriteOnce
+      size: 5Gi
+    # -- Configure a hostPathMount to mount a USB device in the container.
+    # @default -- See values.yaml
+    # usb:
+    #   enabled: false
+    #   type: hostPath
+    #   hostPath: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2400981-if00
+
+  additionalVolumeMounts:
+    - name: usb
+      mountPath: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2487448-if00
+
+  additionalVolumes:
+    - name: usb
+      hostPath:
+        path: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2487448-if00
+
+  # -- Affinity constraint rules to place the Pod on a specific node.
+  # [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - dmn-pi-worker-02
+
+  tolerations:
+  - key: usbservices
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
+
+  # -- zigbee2mqtt configuration settings.
+  # This will be copied into the container's persistent storage at first run only.
+  # Further configuration should be done in the application itself!
+  # See [project documentation](https://www.zigbee2mqtt.io/information/configuration.html) for more information.
+  # @default -- See values.yaml
+  config:
+    # These will be applied ONLY on first run
+    # Home Assistant integration (MQTT discovery)
+    homeassistant: true
+
+    # allow new devices to join
+    # WARNING: Disable this after all devices have been paired! (default: false)
+    # Note: this will be controllable in the UI
+    permit_join: false
+
+    # MQTT settings
+    mqtt:
+      # MQTT base topic for zigbee2mqtt MQTT messages
+      base_topic: zigbee2mqtt
+      # MQTT server URL
+      server: "mqtt://emqx.emqx.svc"
+      # MQTT server authentication, uncomment if required:
+      # user: mqqt-user
+      # password: fut@nab0mxk-VWG3pvb
+      # client_id: my_id
+      # Alternatively, credentials may be put into a separate file, managed through a secret:
+      # password: '!secret password'
+
+      # Optional: Include device information to mqtt messages (default: false)
+      include_device_information: true
+
+    # USB / Serial settings
+    serial:
+      # Location of your zigbee device
+      port: /dev/ttyACM0
+      # Optional: adapter type, not needed unless you are experiencing problems (options: zstack, deconz)
+      adapter: deconz
+
+    advanced:
+      network_key: GENERATE
+      log_output:
+        - console
+      log_level: info
+
+      # Optional: ZigBee channel, changing requires re-pairing of all devices. (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
+      # default: 11
+      # channel: 11
+
+      # Optional: Baudrate for serial port (default: 115200 for Z-Stack, 38400 for Deconz)
+      # baudrate: 38400
+
+      # Optional: RTS / CTS Hardware Flow Control for serial port (default: false)
+      # rtscts: true
+
+      # Optional: Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message
+      # possible values are: disable (default), ISO_8601, ISO_8601_local, epoch (default: disable)
+      last_seen: 'ISO_8601'
+
+      homeassistant_discovery_topic: 'homeassistant'
+      homeassistant_status_topic: 'homeassistant/status'
+
+      # Optional: Enables report feature (see information -> report for more details) (default: false)
+      # report: true
+
+      # Optional: Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg (default: false)
+      # elapsed: true
+
+    # Both of these need to be enabled for the webui
+    frontend:
+      port: 8080
+    experimental:
+      new_api: true
+
