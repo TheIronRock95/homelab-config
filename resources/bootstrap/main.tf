@@ -24,7 +24,7 @@ module "talos" {
     proxmox_cluster = "homelab"
   }
 
-  nodes = { #(Kube Nodes: 10.0.10.210-210 | Kube API: 10.0.10.230 | Cilium-pool: 10.0.0.240-250)
+  nodes = { #(Kube Nodes: 10.0.10.210-220 | Kube API: 10.0.10.230 | Cilium-pool: 10.0.0.240-250)
     "ctrl-00" = {
       host_node     = "dmn-sk-pve-01"
       machine_type  = "controlplane"
