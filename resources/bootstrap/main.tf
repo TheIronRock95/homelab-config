@@ -13,7 +13,7 @@ module "talos" {
 
   cilium = {
     install = file("${path.module}/talos/inline-manifests/cilium-install.yaml")
-    values  = file("${path.module}/../gitops-config/operators/cilium/values.yaml")
+    values  = file("${path.module}/talos/inline-manifests/values.yaml")
   }
 
   cluster = {
@@ -33,6 +33,7 @@ module "talos" {
       vm_id         = 800
       cpu           = 4
       ram_dedicated = 4096
+      disk_size     = 50
     }
     "ctrl-01" = {
       host_node     = "dmn-sk-pve-01"
@@ -43,6 +44,7 @@ module "talos" {
       cpu           = 4
       ram_dedicated = 4096
       igpu          = false
+      disk_size     = 50
     }
     "ctrl-02" = {
       host_node     = "dmn-sk-pve-02"
@@ -52,47 +54,48 @@ module "talos" {
       vm_id         = 802
       cpu           = 4
       ram_dedicated = 3072
+      disk_size     = 50
     }
-    "work-00" = {
-      host_node     = "dmn-sk-pve-01"
-      machine_type  = "worker"
-      ip            = "10.0.10.213"
-      mac_address   = "BC:24:11:2E:08:00"
-      vm_id         = 810
-      cpu           = 5
-      ram_dedicated = 10240
-      igpu          = false
-    }
-    "work-01" = {
-      host_node     = "dmn-sk-pve-01"
-      machine_type  = "worker"
-      ip            = "10.0.10.214"
-      mac_address   = "BC:24:11:2E:08:01"
-      vm_id         = 811
-      cpu           = 5
-      ram_dedicated = 10240
-      igpu          = false
-    }
-    "work-02" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "worker"
-      ip            = "10.0.10.215"
-      mac_address   = "BC:24:11:2E:08:02"
-      vm_id         = 812
-      cpu           = 2
-      ram_dedicated = 4096
-      igpu          = false
-    }
-    "work-03" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "worker"
-      ip            = "10.0.10.216"
-      mac_address   = "BC:24:11:2E:08:03"
-      vm_id         = 813
-      cpu           = 2
-      ram_dedicated = 4096
-      igpu          = false
-    }
+    # "work-00" = {
+    #   host_node     = "dmn-sk-pve-01"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.213"
+    #   mac_address   = "BC:24:11:2E:08:00"
+    #   vm_id         = 810
+    #   cpu           = 5
+    #   ram_dedicated = 10240
+    #   igpu          = false
+    # }
+    # "work-01" = {
+    #   host_node     = "dmn-sk-pve-01"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.214"
+    #   mac_address   = "BC:24:11:2E:08:01"
+    #   vm_id         = 811
+    #   cpu           = 5
+    #   ram_dedicated = 10240
+    #   igpu          = false
+    # }
+    # "work-02" = {
+    #   host_node     = "dmn-sk-pve-02"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.215"
+    #   mac_address   = "BC:24:11:2E:08:02"
+    #   vm_id         = 812
+    #   cpu           = 2
+    #   ram_dedicated = 4096
+    #   igpu          = false
+    # }
+    # "work-03" = {
+    #   host_node     = "dmn-sk-pve-02"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.216"
+    #   mac_address   = "BC:24:11:2E:08:03"
+    #   vm_id         = 813
+    #   cpu           = 2
+    #   ram_dedicated = 4096
+    #   igpu          = false
+    # }
   }
 }
 
