@@ -5,5 +5,5 @@ version: 0.0.0
 
 dependencies:
 - name: node-red
-  version: 0.32.1
+  version: 0.34.0
   repository: https://schwarzit.github.io/node-red-chart/
