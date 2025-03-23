@@ -34,7 +34,7 @@ resource "null_resource" "apply_secret" {
 ### Helm dependency build voor ArgoCD
 resource "null_resource" "helm_dependency_argo" {
   provisioner "local-exec" {
-    command = "helm dependency build charts/argo-cd"
+    command = "helm dependency build operators/argo-cd"
   }
   depends_on = [null_resource.validate_namespaces]
 }
@@ -95,7 +95,7 @@ resource "null_resource" "apply_cluster_secret_store" {
 
   provisioner "local-exec" {
     command = <<EOT
-kubectl apply -f charts/external-secrets/templates/cluster-secret-store.yaml
+kubectl apply -f operators/external-secrets/templates/cluster-secret-store.yaml
 sleep 10
 until kubectl get ClusterSecretStore onepassword-connect -n external-secrets -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' | grep -q "True"; do
   echo "Wachten tot ClusterSecretStore gereed is..."
@@ -111,9 +111,9 @@ resource "null_resource" "apply_additional_secrets" {
 
   provisioner "local-exec" {
     command = <<EOT
-kubectl apply -f charts/external-secrets/templates/github-client-secret.yaml \
-              -f charts/external-secrets/templates/github-private-repo-creds.yaml \
-              -f charts/external-secrets/templates/onepassword-connect-credentials.yaml
+kubectl apply -f operators/external-secrets/templates/github-client-secret.yaml \
+              -f operators/external-secrets/templates/github-private-repo-creds.yaml \
+              -f operators/external-secrets/templates/onepassword-connect-credentials.yaml
 EOT
   }
 }
@@ -121,7 +121,7 @@ EOT
 ### ArgoCD installeren
 resource "helm_release" "argo_cd" {
   name       = "argo-cd"
-  chart      = "charts/argo-cd/"
+  chart      = "operators/argo-cd/"
   namespace  = kubernetes_namespace.namespaces["argocd"].metadata[0].name
   depends_on = [null_resource.helm_dependency_argo]
 }
@@ -131,7 +131,7 @@ resource "null_resource" "deploy_root_app" {
   depends_on = [helm_release.argo_cd]
 
   provisioner "local-exec" {
-    command = "helm template ./charts/root-app | kubectl apply -f -"
+    command = "helm template ./operators/root-app | kubectl apply -f -"
   }
 }
 
