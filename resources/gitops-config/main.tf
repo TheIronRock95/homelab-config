@@ -31,6 +31,28 @@ resource "null_resource" "apply_secret" {
   depends_on = [null_resource.validate_namespaces]
 }
 
+resource "null_resource" "validate_and_apply_secret" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      if ! kubectl get secret onepassword-connect-credentials -n onepassword; then
+        if kubectl apply -f ${var.secret_path}; then
+          echo "✅ Secret 'onepassword-connect-credentials' successfully created."
+        else
+          echo "❌ Failed to create secret 'onepassword-connect-credentials'."
+          exit 1
+        fi
+      else
+        echo "ℹ️ Secret 'onepassword-connect-credentials' already exists. Skipping apply."
+      fi
+    EOT
+  }
+
+  depends_on = [
+    null_resource.apply_secret,
+    null_resource.validate_namespaces
+  ]
+}
+
 ### Helm dependency build voor ArgoCD
 resource "null_resource" "helm_dependency_argo" {
   provisioner "local-exec" {
