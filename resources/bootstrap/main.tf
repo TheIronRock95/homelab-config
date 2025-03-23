@@ -99,26 +99,6 @@ module "talos" {
   }
 }
 
-# Wait for user input before continuing
-resource "null_resource" "wait_for_user_input" {
-  provisioner "local-exec" {
-    command = "read -p 'Now copy the kube config to the correct folder and press [Enter] to continue deployment...' user_input"
-  }
-
-  depends_on = [module.talos]
-}
-
-module "argocd" {
-  source = "./argocd"
-
-  kube_config_path         = var.kube_config_path
-  onepassword_version      = var.onepassword_version
-  external_secrets_version = var.external_secrets_version
-
-  depends_on = [null_resource.wait_for_user_input]
-}
-
-
 # module "proxmox_csi_plugin" {
 #   depends_on = [module.talos]
 #   source = "./proxmox-csi-plugin"

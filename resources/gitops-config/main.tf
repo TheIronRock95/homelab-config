@@ -46,7 +46,7 @@ resource "helm_release" "onepassword" {
   chart      = "connect"
   namespace  = kubernetes_namespace.namespaces["onepassword"].metadata[0].name
   version    = var.onepassword_version
-  values     = [file("charts/onepassword-connect/values.yaml")]
+  values     = [file("operators/onepassword-connect/values.yaml")]
   depends_on = [null_resource.apply_secret]
 }
 
@@ -71,7 +71,7 @@ resource "helm_release" "external_secrets" {
   chart      = "external-secrets"
   namespace  = kubernetes_namespace.namespaces["external-secrets"].metadata[0].name
   version    = var.external_secrets_version
-  values     = [file("charts/external-secrets/values.yaml")]
+  values     = [file("operators/external-secrets/values.yaml")]
 
   set {
     name  = "includeCRDs"

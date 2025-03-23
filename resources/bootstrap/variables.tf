@@ -12,6 +12,3 @@ variable "proxmox" {
   })
   sensitive = true
 }
-
-onepassword_version      = "1.17.0"
-external_secrets_version = "0.14.2"
