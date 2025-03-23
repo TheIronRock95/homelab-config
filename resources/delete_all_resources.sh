@@ -53,4 +53,10 @@ rm -f "$BOOTSTRAP_DIR/backend.tf"  # Delete the bootstrap backend file
 rm -f "$GITOPS_CONFIG_DIR/backend.tf"  # Delete the gitops-config backend file
 echo "Backend files deleted."
 
-echo "All resources have been deleted successfully, and kube config has been cleared."
+# Step 6: Delete .terraform directories and .terraform.lock.hcl files
+echo "Cleaning up .terraform directories and lock files..."
+rm -rf "$BOOTSTRAP_DIR/.terraform" "$GITOPS_CONFIG_DIR/.terraform"
+rm -f "$BOOTSTRAP_DIR/.terraform.lock.hcl" "$GITOPS_CONFIG_DIR/.terraform.lock.hcl"
+echo ".terraform directories and lock files removed."
+
+echo "✅ All resources and configuration files have been deleted successfully."
