@@ -36,7 +36,10 @@ resource "null_resource" "helm_dependency_argo" {
   provisioner "local-exec" {
     command = "helm dependency build operators/argo-cd"
   }
-  depends_on = [null_resource.validate_namespaces]
+  depends_on = [
+    null_resource.validate_namespaces,
+    null_resource.apply_secret
+  ]
 }
 
 ### 1Password Connector installeren
@@ -123,7 +126,10 @@ resource "helm_release" "argo_cd" {
   name       = "argo-cd"
   chart      = "operators/argo-cd/"
   namespace  = kubernetes_namespace.namespaces["argocd"].metadata[0].name
-  depends_on = [null_resource.helm_dependency_argo]
+  depends_on = [
+    null_resource.helm_dependency_argo,
+    null_resource.apply_cluster_secret_store
+  ]
 }
 
 ### Root-app toepassen vanuit de juiste map
