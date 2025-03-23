@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/TheIronRock95/homelab-config
-    path: /sync-app/
+    path: resources/gitops-config/sync-app/templates/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc

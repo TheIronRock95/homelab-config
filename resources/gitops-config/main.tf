@@ -131,7 +131,7 @@ resource "null_resource" "deploy_root_app" {
   depends_on = [helm_release.argo_cd]
 
   provisioner "local-exec" {
-    command = "helm template ./operators/root-app | kubectl apply -f -"
+    command = "helm template ./sync-app | kubectl apply -f -"
   }
 }
 

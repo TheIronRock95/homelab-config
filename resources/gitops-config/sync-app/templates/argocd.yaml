@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/TheIronRock95/homelab-config
-    path: /operators/argo-cd
+    path: resources/gitops-config/operators/argo-cd
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
