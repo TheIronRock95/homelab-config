@@ -31,9 +31,9 @@ module "talos" {
       ip            = "10.0.10.210"
       mac_address   = "BC:24:11:2E:C8:00"
       vm_id         = 800
-      cpu           = 4
+      cpu           = 2
       ram_dedicated = 4096
-      disk_size     = 50
+      disk_size     = 100
     }
     "ctrl-01" = {
       host_node     = "dmn-sk-pve-01"
@@ -41,61 +41,81 @@ module "talos" {
       ip            = "10.0.10.211"
       mac_address   = "BC:24:11:2E:C8:01"
       vm_id         = 801
-      cpu           = 4
+      cpu           = 2
       ram_dedicated = 4096
-      igpu          = false
-      disk_size     = 50
+      disk_size     = 100
     }
-    # "ctrl-02" = {
-    #   host_node     = "dmn-sk-pve-02"
-    #   machine_type  = "controlplane"
-    #   ip            = "10.0.10.212"
-    #   mac_address   = "BC:24:11:2E:C8:02"
-    #   vm_id         = 802
-    #   cpu           = 4
-    #   ram_dedicated = 3072
-    #   disk_size     = 50
-    # }
-    # "work-00" = {
-    #   host_node     = "dmn-sk-pve-01"
-    #   machine_type  = "worker"
-    #   ip            = "10.0.10.213"
-    #   mac_address   = "BC:24:11:2E:08:00"
-    #   vm_id         = 810
-    #   cpu           = 5
-    #   ram_dedicated = 10240
-    #   igpu          = false
-    # }
-    # "work-01" = {
-    #   host_node     = "dmn-sk-pve-01"
-    #   machine_type  = "worker"
-    #   ip            = "10.0.10.214"
-    #   mac_address   = "BC:24:11:2E:08:01"
-    #   vm_id         = 811
-    #   cpu           = 5
-    #   ram_dedicated = 10240
-    #   igpu          = false
-    # }
-    # "work-02" = {
-    #   host_node     = "dmn-sk-pve-02"
-    #   machine_type  = "worker"
-    #   ip            = "10.0.10.215"
-    #   mac_address   = "BC:24:11:2E:08:02"
-    #   vm_id         = 812
-    #   cpu           = 2
-    #   ram_dedicated = 4096
-    #   igpu          = false
-    # }
-    # "work-03" = {
-    #   host_node     = "dmn-sk-pve-02"
-    #   machine_type  = "worker"
-    #   ip            = "10.0.10.216"
-    #   mac_address   = "BC:24:11:2E:08:03"
-    #   vm_id         = 813
-    #   cpu           = 2
-    #   ram_dedicated = 4096
-    #   igpu          = false
-    # }
+    "ctrl-02" = {
+      host_node     = "dmn-sk-pve-02"
+      machine_type  = "controlplane"
+      ip            = "10.0.10.212"
+      mac_address   = "BC:24:11:2E:C8:02"
+      vm_id         = 802
+      cpu           = 2
+      ram_dedicated = 4096
+      disk_size     = 100
+    }
+    "work-00" = {
+      host_node     = "dmn-sk-pve-01"
+      machine_type  = "worker"
+      ip            = "10.0.10.213"
+      mac_address   = "BC:24:11:2E:08:00"
+      vm_id         = 810
+      cpu           = 2
+      ram_dedicated = 4096
+      disk_size     = 100
+    }
+    "work-01" = {
+      host_node     = "dmn-sk-pve-01"
+      machine_type  = "worker"
+      ip            = "10.0.10.214"
+      mac_address   = "BC:24:11:2E:08:01"
+      vm_id         = 811
+      cpu           = 4
+      ram_dedicated = 8192
+      disk_size     = 175
+    }
+    "work-02" = {
+      host_node     = "dmn-sk-pve-01"
+      machine_type  = "worker"
+      ip            = "10.0.10.215"
+      mac_address   = "BC:24:11:2E:08:02"
+      vm_id         = 812
+      cpu           = 4
+      ram_dedicated = 8192
+      disk_size     = 175
+    }
+    "work-03" = {
+      host_node     = "dmn-sk-pve-02"
+      machine_type  = "worker"
+      ip            = "10.0.10.216"
+      mac_address   = "BC:24:11:2E:08:03"
+      vm_id         = 813
+      cpu           = 4
+      ram_dedicated = 8192
+      disk_size     = 175
+    }
+    "storage-01" = {
+      host_node     = "dmn-sk-pve-01"
+      machine_type  = "worker"
+      ip            = "10.0.10.217"
+      mac_address   = "BC:24:11:2E:08:04"
+      vm_id         = 814
+      cpu           = 2
+      ram_dedicated = 4096
+      disk_size     = 512
+    }
+    "storage-02" = {
+      host_node     = "dmn-sk-pve-02"
+      machine_type  = "worker"
+      ip            = "10.0.10.217"
+      mac_address   = "BC:24:11:2E:08:05"
+      vm_id         = 815
+      cpu           = 2
+      ram_dedicated = 4096
+      disk_size     = 512
+    }
+
   }
 }
 
