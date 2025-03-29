@@ -73,7 +73,7 @@ module "talos" {
       vm_id         = 811
       cpu           = 4
       ram_dedicated = 8192
-      disk_size     = 175
+      disk_size     = 250
     }
     "work-02" = {
       host_node     = "dmn-sk-pve-01"
@@ -83,7 +83,7 @@ module "talos" {
       vm_id         = 812
       cpu           = 4
       ram_dedicated = 8192
-      disk_size     = 175
+      disk_size     = 250
     }
     "work-03" = {
       host_node     = "dmn-sk-pve-02"
@@ -93,29 +93,18 @@ module "talos" {
       vm_id         = 813
       cpu           = 4
       ram_dedicated = 8192
-      disk_size     = 175
+      disk_size     = 250
     }
-    "storage-01" = {
-      host_node     = "dmn-sk-pve-01"
+    "work-04" = {
+      host_node     = "dmn-sk-pve-02"
       machine_type  = "worker"
       ip            = "10.0.10.217"
       mac_address   = "BC:24:11:2E:08:04"
       vm_id         = 814
       cpu           = 2
       ram_dedicated = 4096
-      disk_size     = 512
+      disk_size     = 250
     }
-    "storage-02" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "worker"
-      ip            = "10.0.10.217"
-      mac_address   = "BC:24:11:2E:08:05"
-      vm_id         = 815
-      cpu           = 2
-      ram_dedicated = 4096
-      disk_size     = 512
-    }
-
   }
 }
 
