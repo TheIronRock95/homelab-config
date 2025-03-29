@@ -19,6 +19,10 @@ done
 EOT
   }
 
+  triggers = {
+    namespace = each.value
+  }
+
   depends_on = [kubernetes_namespace.namespaces]
 }
 
@@ -26,6 +30,10 @@ EOT
 resource "null_resource" "apply_secret" {
   provisioner "local-exec" {
     command = "kubectl apply -f ${var.secret_path}"
+  }
+
+  triggers = {
+    secret_path = var.secret_path
   }
 
   depends_on = [null_resource.validate_namespaces]
