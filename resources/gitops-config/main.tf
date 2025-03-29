@@ -167,6 +167,10 @@ resource "null_resource" "deploy_root_app" {
     command = "helm template ./sync-app | kubectl apply -f -"
   }
 
+  triggers = {
+    sync_app_path = "./sync-app"
+  }
+
   depends_on = [
     helm_release.argo_cd
   ]
@@ -175,6 +179,10 @@ resource "null_resource" "deploy_root_app" {
 resource "null_resource" "output" {
   provisioner "local-exec" {
     command = "echo '✅ Deployments completed successfully.'"
+  }
+
+  triggers = {
+    deployment_status = "completed"
   }
 
   depends_on = [
