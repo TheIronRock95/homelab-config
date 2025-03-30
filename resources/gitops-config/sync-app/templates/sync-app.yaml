@@ -13,8 +13,10 @@ spec:
     path: resources/gitops-config/sync-app/templates/
     targetRevision: HEAD
   destination:
-    server: https://kubernetes.default.svc
     namespace: default
+    server: https://kubernetes.default.svc
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
+      
