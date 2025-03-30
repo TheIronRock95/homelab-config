@@ -94,6 +94,12 @@ resource "kubectl_manifest" "onepassword_connect_credentials" {
   depends_on = [time_sleep.wait_for_cluster_secret_store]
 }
 
+resource "kubectl_manifest" "onepassword-connect-token-external-secret" {
+  yaml_body = file("operators/external-secrets/templates/onepassword-connect-token-external-secret.yaml")
+
+  depends_on = [time_sleep.wait_for_cluster_secret_store]
+}
+
 
 ### Install ArgoCD
 
@@ -107,7 +113,8 @@ resource "helm_release" "argo_cd" {
   depends_on = [
     kubectl_manifest.github_client_secret,
     kubectl_manifest.github_private_repo_creds,
-    kubectl_manifest.onepassword_connect_credentials
+    kubectl_manifest.onepassword_connect_credentials,
+    kubectl_manifest.onepassword-connect-token-external-secret
   ]
 }
 
