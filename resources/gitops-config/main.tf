@@ -95,7 +95,7 @@ resource "kubectl_manifest" "onepassword_connect_credentials" {
 }
 
 resource "kubectl_manifest" "onepassword-connect-token-external-secret" {
-  yaml_body = file("operators/argo-cd/templates/onepassword-connect-token-external-secret.yaml")
+  yaml_body = file("operators/external-secrets/templates/onepassword-connect-token-external-secret.yaml")
 
   depends_on = [time_sleep.wait_for_cluster_secret_store]
 }
