@@ -1,3 +1,7 @@
+data "local_file" "secret_yaml" {
+  filename = var.secret_path
+}
+
 ### Step-by-Step Namespace Creation with Validation
 resource "kubernetes_namespace" "namespaces" {
   for_each = toset(var.namespaces)
@@ -7,54 +11,12 @@ resource "kubernetes_namespace" "namespaces" {
   }
 }
 
-resource "null_resource" "validate_namespaces" {
-  for_each = toset(var.namespaces)
-
-  provisioner "local-exec" {
-    command = <<EOT
-until kubectl get namespace ${each.value} -o jsonpath='{.status.phase}' | grep -q "Active"; do
-  echo "Waiting for namespace ${each.value} to become active..."
-  sleep 5
-done
-EOT
-  }
-
-  triggers = {
-    namespace = each.value
-  }
-
-  depends_on = [kubernetes_namespace.namespaces]
-}
-
-### Apply Secret and Validate
-resource "null_resource" "apply_secret" {
-  provisioner "local-exec" {
-    command = "kubectl apply -f ${var.secret_path}"
-  }
-
-  triggers = {
-    secret_path = var.secret_path
-  }
-
-  depends_on = [null_resource.validate_namespaces]
-}
-
-resource "time_sleep" "wait_for_secret" {
-  create_duration = "40s"
+resource "kubectl_manifest" "apply_secrets" {
+  count     = length(local.manifests)
+  yaml_body = local.manifests[count.index]
 
   depends_on = [
-    null_resource.apply_secret
-  ]
-}
-
-### Helm Dependency Build for ArgoCD
-resource "null_resource" "helm_dependency_argo" {
-  provisioner "local-exec" {
-    command = "helm dependency build operators/argo-cd"
-  }
-
-  depends_on = [
-    time_sleep.wait_for_secret
+    kubernetes_namespace.namespaces
   ]
 }
 
@@ -68,23 +30,7 @@ resource "helm_release" "onepassword" {
   values     = [file("operators/onepassword-connect/values.yaml")]
 
   depends_on = [
-    null_resource.helm_dependency_argo
-  ]
-}
-
-### Validate 1Password Deployment
-resource "null_resource" "validate_onepassword" {
-  provisioner "local-exec" {
-    command = <<EOT
-until kubectl rollout status deployment/onepassword-connect -n onepassword --timeout=300s; do
-  echo "Waiting for 1Password deployment to be ready..."
-  sleep 5
-done
-EOT
-  }
-
-  depends_on = [
-    helm_release.onepassword
+    kubectl_manifest.apply_secrets
   ]
 }
 
@@ -103,72 +49,76 @@ resource "helm_release" "external_secrets" {
   }
 
   depends_on = [
-    null_resource.validate_onepassword
+    helm_release.onepassword
   ]
 }
 
-resource "null_resource" "wait_for_webhook" {
-  provisioner "local-exec" {
-    command = "sleep 30"
-  }
+resource "time_sleep" "wait_for_webhook" {
+  depends_on = [helm_release.external_secrets]
+
+  create_duration = "30s" # Adjust based on readiness time
+} 
+
+# Apply ClusterSecretStore
+resource "kubectl_manifest" "cluster_secret_store" {
+  yaml_body = file("operators/external-secrets/templates/cluster-secret-store.yaml")
 
   depends_on = [
-    helm_release.external_secrets
+    helm_release.external_secrets,
+    time_sleep.wait_for_webhook
   ]
 }
 
-### Apply ClusterSecretStore and Validate
-resource "null_resource" "apply_cluster_secret_store" {
-  provisioner "local-exec" {
-    command = <<EOT
-kubectl apply -f operators/external-secrets/templates/cluster-secret-store.yaml
-sleep 10
-until kubectl get ClusterSecretStore onepassword-connect -n external-secrets -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' | grep -q "True"; do
-  echo "Waiting for ClusterSecretStore to be ready..."
-  sleep 5
-done
-EOT
-  }
+# Wait for ClusterSecretStore to be ready
+resource "time_sleep" "wait_for_cluster_secret_store" {
+  depends_on = [kubectl_manifest.cluster_secret_store]
 
-  depends_on = [
-    null_resource.wait_for_webhook
-  ]
+  create_duration = "15s" # Adjust based on readiness time
 }
 
-### Apply Additional Secrets
-resource "null_resource" "apply_additional_secrets" {
-  provisioner "local-exec" {
-    command = <<EOT
-kubectl apply -f operators/external-secrets/templates/github-client-secret.yaml \
-              -f operators/external-secrets/templates/github-private-repo-creds.yaml \
-              -f operators/external-secrets/templates/onepassword-connect-credentials.yaml
-EOT
-  }
+resource "kubectl_manifest" "github_client_secret" {
+  yaml_body = file("operators/external-secrets/templates/github-client-secret.yaml")
 
-  depends_on = [
-    null_resource.apply_cluster_secret_store
-  ]
+  depends_on = [time_sleep.wait_for_cluster_secret_store]
 }
+
+resource "kubectl_manifest" "github_private_repo_creds" {
+  yaml_body = file("operators/external-secrets/templates/github-private-repo-creds.yaml")
+
+  depends_on = [time_sleep.wait_for_cluster_secret_store]
+}
+
+resource "kubectl_manifest" "onepassword_connect_credentials" {
+  yaml_body = file("operators/external-secrets/templates/onepassword-connect-credentials.yaml")
+
+  depends_on = [time_sleep.wait_for_cluster_secret_store]
+}
+
 
 ### Install ArgoCD
+
 resource "helm_release" "argo_cd" {
   name       = "argo-cd"
-  chart      = "operators/argo-cd/"
+  repository = "https://argoproj.github.io/argo-helm"
   namespace  = kubernetes_namespace.namespaces["argocd"].metadata[0].name
-
+  chart      = "argo-cd"
+  version    = "7.8.13"
+  values     = [file("./operators/argo-cd/values.yaml")]
   depends_on = [
-    null_resource.apply_additional_secrets
+    kubectl_manifest.github_client_secret,
+    kubectl_manifest.github_private_repo_creds,
+    kubectl_manifest.onepassword_connect_credentials
   ]
 }
 
-### Deploy Root App
+# ### Deploy Root App
 resource "null_resource" "deploy_root_app" {
   provisioner "local-exec" {
     command = "helm template ./sync-app | kubectl apply -f -"
   }
 
   triggers = {
-    sync_app_path = "./sync-app"
+    argo_cd_release_id = helm_release.argo_cd.id
   }
 
   depends_on = [
@@ -176,16 +126,3 @@ resource "null_resource" "deploy_root_app" {
   ]
 }
 
-resource "null_resource" "output" {
-  provisioner "local-exec" {
-    command = "echo '✅ Deployments completed successfully.'"
-  }
-
-  triggers = {
-    deployment_status = "completed"
-  }
-
-  depends_on = [
-    null_resource.deploy_root_app
-  ]
-}

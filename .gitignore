@@ -30,6 +30,7 @@ terraform.rc
 
 # Ignore output and temporary directories
 **/output/
+**/input-files/
 **/temp/**
 
 # Ignore Helm-related files

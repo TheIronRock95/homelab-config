@@ -47,13 +47,7 @@ rm -f "$STATE_DIR/terraform.tfstate"  # Bootstrap state
 rm -f "$STATE_DIR/gitops-config-terraform.tfstate"  # GitOps config state
 echo "State files deleted."
 
-# Step 5: Delete the backend.tf files
-echo "Deleting backend.tf files..."
-rm -f "$BOOTSTRAP_DIR/backend.tf"  # Delete the bootstrap backend file
-rm -f "$GITOPS_CONFIG_DIR/backend.tf"  # Delete the gitops-config backend file
-echo "Backend files deleted."
-
-# Step 6: Delete .terraform directories and .terraform.lock.hcl files
+# Step 5: Delete .terraform directories and .terraform.lock.hcl files
 echo "Cleaning up .terraform directories and lock files..."
 rm -rf "$BOOTSTRAP_DIR/.terraform" "$GITOPS_CONFIG_DIR/.terraform"
 rm -f "$BOOTSTRAP_DIR/.terraform.lock.hcl" "$GITOPS_CONFIG_DIR/.terraform.lock.hcl"

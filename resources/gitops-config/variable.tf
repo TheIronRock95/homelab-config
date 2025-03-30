@@ -7,7 +7,7 @@ variable "kube_config_path" {
 variable "secret_path" {
   description = "Pad naar het secret.yaml-bestand"
   type        = string
-  default     = "$HOME/Downloads/secret.yaml"
+  default     = "./input-files/secret.yaml"
 }
 
 variable "onepassword_version" {
@@ -25,3 +25,4 @@ variable "external_secrets_version" {
 variable "namespaces" {
   default = ["onepassword", "external-secrets", "argocd"]
 }
+

@@ -20,29 +20,18 @@ echo "Do you want to (M)erge or (D)elete the existing kube config?"
 echo "Press M for Merge, D for Delete:"
 read -r choice
 
-# Step 2: Create the backend.tf file for resources/bootstrap with local backend configuration
-echo "Configuring local backend for resources/bootstrap"
-mkdir -p "$BOOTSTRAP_DIR"  # Ensure the directory exists before writing the backend.tf
-cat <<EOF > "$BOOTSTRAP_DIR/backend.tf"
-terraform {
-  backend "local" {
-    path = "$STATE_DIR/talos.tfstate"  # Local path for the state file
-  }
-}
-EOF
-
-# Step 3: Navigate into the bootstrap directory
+# Step 2: Navigate into the bootstrap directory
 cd "$BOOTSTRAP_DIR"
 
-# Step 4: Initialize OpenTofu in the bootstrap directory
+# Step 3: Initialize OpenTofu in the bootstrap directory
 echo "Initializing OpenTofu for resources/bootstrap"
 tofu init  # Initialize OpenTofu with the local backend
 
-# Step 5: Apply OpenTofu with auto-approve for resources/bootstrap
+# Step 4: Apply OpenTofu with auto-approve for resources/bootstrap
 echo "Applying OpenTofu for resources/bootstrap"
 tofu apply -auto-approve  # Apply the configuration
 
-# Step 6: Ask user for action on kube config based on their earlier choice
+# Step 5: Ask user for action on kube config based on their earlier choice
 if [[ "$choice" == "D" || "$choice" == "d" ]]; then
   echo "Deleting the existing kube config..."
   # Delete the existing kube config
@@ -75,26 +64,15 @@ else
   exit 1
 fi
 
-# Step 7: Configure the backend for gitops-config
-echo "Configuring local backend for resources/gitops-config"
-mkdir -p "$GITOPS_CONFIG_DIR"  # Ensure the directory exists before writing the backend.tf
-cat <<EOF > "$GITOPS_CONFIG_DIR/backend.tf"
-terraform {
-  backend "local" {
-    path = "$STATE_DIR/argocd.tfstate"  # Local path for the state file
-  }
-}
-EOF
-
-# Step 8: Navigate into the gitops-config directory
+# Step 6: Navigate into the gitops-config directory
 cd "$GITOPS_CONFIG_DIR"
 
-# Step 9: Initialize OpenTofu in the gitops-config directory
+# Step 7: Initialize OpenTofu in the gitops-config directory
 echo "Initializing OpenTofu for resources/gitops-config"
 tofu init  # Initialize OpenTofu with the local backend
 
-# Step 10: Apply OpenTofu with auto-approve for resources/gitops-config
+# Step 8: Apply OpenTofu with auto-approve for resources/gitops-config
 echo "Applying OpenTofu for resources/gitops-config"
 tofu apply -auto-approve  # Apply the configuration
 
-echo "Script executed successfully!"
+echo "✅ Script executed successfully!"
