@@ -5,6 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   name: argo-cd
+  namespace: argocd
   labels:
     component: operators
   finalizers:
