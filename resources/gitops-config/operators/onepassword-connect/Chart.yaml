@@ -1,0 +1,4 @@
+apiVersion: v2
+name: onepassword-connect
+version: "1.17.0"
+
