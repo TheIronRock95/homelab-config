@@ -2,8 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   name: argo-cd
-  namespace: argocd
+  namespace: argocd 
+  labels:
+    component: operators
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
