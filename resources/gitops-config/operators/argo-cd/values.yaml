@@ -2,18 +2,10 @@
 ## Ref: https://github.com/argoproj/argo-cd
 ##
 
-# -- Provide a name in place of `argocd`
 nameOverride: argocd
-# -- String to fully override `"argo-cd.fullname"`
 fullnameOverride: ""
-# -- Override the namespace
-# @default -- `.Release.Namespace`
 namespaceOverride: ""
-# -- Override the Kubernetes version, which is used to evaluate certain manifests
 kubeVersionOverride: ""
-# Override APIVersions
-# If you want to template helm charts but cannot access k8s API server
-# you can set api versions here
 apiVersionOverrides: {}
 
 # # -- Create aggregated roles that extend existing cluster roles to interact with argo-cd resources
