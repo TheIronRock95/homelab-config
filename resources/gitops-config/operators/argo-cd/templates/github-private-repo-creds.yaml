@@ -22,7 +22,7 @@ spec:
         url: https://github.com/TheIronRock95/argocd-helmchart-config
         githubAppID: "392111"
         githubAppInstallationID: "41968408"
-        githubAppPrivateKey: '{{ .argoPrivateKey}}'
+        githubAppPrivateKey: '{{ `{{ .argoPrivateKey }}` }}'
   data:
   - secretKey: argoPrivateKey
     remoteRef:
