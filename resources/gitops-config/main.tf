@@ -27,8 +27,23 @@ resource "helm_release" "onepassword" {
   chart      = "connect"
   namespace  = kubernetes_namespace.namespaces["onepassword"].metadata[0].name
   version    = var.onepassword_version
-  values     = [file("operators/onepassword-connect/values.yaml")]
-
+  values = [
+    yamlencode({
+      connect = {
+        credentialsName = "onepassword-connect-credentials"
+        credentialsKey  = "onepassword-connect-credentials.json"
+      }
+      tolerations = [
+        {
+          key      = "node-role.kubernetes.io/control-plane"
+          operator = "Equal"
+          value    = "true"
+          effect   = "NoSchedule"
+        }
+      ]
+    })
+  ]
+  
   depends_on = [
     kubectl_manifest.apply_secrets
   ]
@@ -41,7 +56,18 @@ resource "helm_release" "external_secrets" {
   chart      = "external-secrets"
   namespace  = kubernetes_namespace.namespaces["external-secrets"].metadata[0].name
   version    = var.external_secrets_version
-  values     = [file("operators/external-secrets/values.yaml")]
+  values = [
+    yamlencode({
+      tolerations = [
+        {
+          key      = "node-role.kubernetes.io/control-plane"
+          operator = "Equal"
+          value    = "true"
+          effect   = "NoSchedule"
+        }
+      ]
+    })
+  ]
 
   set {
     name  = "includeCRDs"
