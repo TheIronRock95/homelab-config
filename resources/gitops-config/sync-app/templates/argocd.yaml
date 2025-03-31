@@ -12,10 +12,17 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://github.com/TheIronRock95/homelab-config
-    path: resources/gitops-config/operators/argo-cd
-    targetRevision: HEAD
+  sources:
+    - repoURL: https://charts.external-secrets.io
+      chart: external-secrets
+      targetRevision: 7.8.13
+      helm:
+        valueFiles:
+          - $values/resources/gitops-config/operators/argo-cd/values.yaml
+    - repoURL: https://github.com/TheIronRock95/homelab-config
+      path: resources/gitops-config/operators/argo-cd
+      targetRevision: HEAD
+      ref: values
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
