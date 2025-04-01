@@ -3,8 +3,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
-  name: external-secrets
+    argocd.argoproj.io/sync-wave: "3"
+  name: cert-manager
   namespace: argocd
   labels:
     component: operators
@@ -13,22 +13,18 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://charts.external-secrets.io
-      chart: external-secrets
-      targetRevision: 0.14.2
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.17.1
       helm:
-        values: |
-          installCRDs: true
-          tolerations:
-          - key: node-role.kubernetes.io/control-plane
-            operator: Equal
-            value: "true"
-            effect: NoSchedule
+        valueFiles:
+        - $values/rresources/gitops-config/operators/cert-manager/values.yaml
     - repoURL: https://github.com/TheIronRock95/homelab-config
       targetRevision: HEAD
-      path: resources/gitops-config/operators/external-secrets
+      path: resources/gitops-config/operators/cert-manager
+      ref: values
   destination:
-    namespace: external-secrets
+    namespace: argocd
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
@@ -36,4 +32,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      
