@@ -72,12 +72,12 @@ envoy:
       envoy: [ NET_ADMIN, PERFMON, BPF ]
 
 ingressController:
-  enabled: true
-  default: true
-  loadbalancerMode: shared
-  service:
-    annotations:
-      io.cilium/lb-ipam-ips: 10.0.10.240
+  enabled: false
+  # default: true
+  # loadbalancerMode: shared
+  # service:
+  #   annotations:
+  #     io.cilium/lb-ipam-ips: 10.0.10.240
 
 hubble:
   enabled: true
