@@ -24,7 +24,7 @@ spec:
       path: resources/gitops-config/operators/cilium
       ref: values
   destination:
-    namespace: cilium
+    namespace: kube-system
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
