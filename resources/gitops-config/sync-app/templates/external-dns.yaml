@@ -13,16 +13,16 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://kubernetes-sigs.github.io/external-dns/
-      chart: external-dns
-      targetRevision: 1.16.0
-      helm:
-        valueFiles:
-        - $values/resources/gitops-config/operators/external-dns/values.yaml
-    - repoURL: https://github.com/TheIronRock95/homelab-config
-      targetRevision: HEAD
-      path: resources/gitops-config/operators/external-dns
-      ref: values
+  - repoURL: 'https://kubernetes-sigs.github.io/external-dns/'
+    chart: external-dns
+    targetRevision: 1.16.0
+    helm:
+      valueFiles:
+      - $values/resources/gitops-config/operators/external-dns/values.yaml
+  - repoURL: 'https://github.com/TheIronRock95/homelab-config'
+    path: resources/gitops-config/operators/external-dns
+    targetRevision: HEAD
+    ref: values
   destination:
     namespace: external-dns
     server: https://kubernetes.default.svc
