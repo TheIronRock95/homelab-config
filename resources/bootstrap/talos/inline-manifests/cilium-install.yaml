@@ -1,4 +1,9 @@
 ---
+apiveriosn: v1
+kind: namespace
+metadata:
+  name: cilium
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -10,19 +15,19 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: cilium-install
-  namespace: kube-system
+  namespace: cilium
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cilium-install
-  namespace: kube-system
+  namespace: cilium
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: cilium-install
-  namespace: kube-system
+  namespace: cilium
 spec:
   backoffLimit: 10
   template:

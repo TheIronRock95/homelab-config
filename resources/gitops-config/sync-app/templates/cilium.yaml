@@ -8,7 +8,7 @@ metadata:
   namespace: argocd
   labels:
     component: operators
-  finalizers:
+  finalizers:s
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
@@ -24,7 +24,7 @@ spec:
       path: resources/gitops-config/operators/cilium
       ref: values
   destination:
-    namespace: kube-system
+    namespace: cilium
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
