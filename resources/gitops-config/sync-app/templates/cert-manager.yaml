@@ -18,7 +18,7 @@ spec:
       targetRevision: 1.17.1
       helm:
         valueFiles:
-        - $values/rresources/gitops-config/operators/cert-manager/values.yaml
+        - $values/resources/gitops-config/operators/cert-manager/values.yaml
     - repoURL: https://github.com/TheIronRock95/homelab-config
       targetRevision: HEAD
       path: resources/gitops-config/operators/cert-manager
