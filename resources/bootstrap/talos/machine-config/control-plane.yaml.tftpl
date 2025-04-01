@@ -47,7 +47,7 @@ cluster:
       kind: ConfigMap
       metadata:
         name: cilium-values
-        namespace: cilium
+        namespace: kube-system
       data:
         values.yaml: |-
           ${indent(10, cilium_values)}
