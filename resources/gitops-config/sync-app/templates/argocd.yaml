@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "3"
   name: argo-cd
   namespace: argocd
   labels:
@@ -20,8 +20,8 @@ spec:
         valueFiles:
         - $values/resources/gitops-config/operators/argo-cd/values.yaml
     - repoURL: https://github.com/TheIronRock95/homelab-config
-      path: resources/gitops-config/operators/argo-cd
       targetRevision: HEAD
+      path: resources/gitops-config/operators/argo-cd
       ref: values
   destination:
     namespace: argocd
