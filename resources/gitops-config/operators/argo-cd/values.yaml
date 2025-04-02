@@ -121,7 +121,7 @@ configs:
   cm:
     url: https://argocd.local.damman.tech
     exec.enabled: "true"
-    admin.enabled: "false"
+    admin.enabled: "true"
     kustomize.buildOptions: --enable-helm
     resource.exclusions: |
       - apiGroups:
