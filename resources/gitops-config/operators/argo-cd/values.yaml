@@ -1,9 +1,40 @@
+configs:
+  cm:
+    url: https://argocd.local.damman.tech
+    exec.enabled: "true"
+    admin.enabled: "true"
+    resource.exclusions: |
+      - apiGroups:
+        - cilium.io
+        kinds:
+        - CiliumIdentity
+        clusters:
+        - "*"
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientSecret: $github-client-secret:dex.github.clientSecret
+            clientID: 73cf0e66844d5dd766ab
+            orgs:
+              - name: sironite
+                teams:
+                  - DevOps
+  params:
+    server.insecure: "true"
+  rbac:
+    policy.csv: |
+      g, sironite:DevOps, role:admin
+    policy.default: role:readonly
+
 controller:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -12,12 +43,12 @@ controller:
       cpu: 200m
       memory: 1Gi
 
-applicationsetController:
+applicationSet:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -28,10 +59,10 @@ applicationsetController:
 
 repoServer:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -42,10 +73,10 @@ repoServer:
 
 server:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -57,10 +88,10 @@ server:
 
 redis:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -71,10 +102,10 @@ redis:
 
 dex:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -82,28 +113,13 @@ dex:
     requests:
       cpu: 1m
       memory: 50Mi
-  config:
-    logger:
-      level: debug
-      format: json
-    connectors:
-      - type: github
-        id: github
-        name: GitHub
-        config:
-          clientSecret: $github-client-secret:dex.github.clientSecret
-          clientID: 73cf0e66844d5dd766ab
-          orgs:
-            - name: sironite
-              teams:
-                - DevOps
 
 notificationsController:
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    value: "true"
+    effect: NoSchedule
   resources:
     limits:
       cpu: 1
@@ -111,22 +127,3 @@ notificationsController:
     requests:
       cpu: 1m
       memory: 50Mi
-
-rbac:
-  policy.default: role:readonly
-  policy.csv: |
-    g, sironite:DevOps, role:admin
-
-configs:
-  cm:
-    url: https://argocd.local.damman.tech
-    exec.enabled: "true"
-    admin.enabled: "true"
-    kustomize.buildOptions: --enable-helm
-    resource.exclusions: |
-      - apiGroups:
-        - cilium.io
-        kinds:
-        - CiliumIdentity
-        clusters:
-        - "*"
