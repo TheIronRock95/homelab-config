@@ -95,9 +95,41 @@ resource "kubectl_manifest" "cluster_secret_store" {
   ]
 }
 
+resource "kubectl_manifest" "github_client_secret" {
+  yaml_body = file("input-files/github-client-secret.yaml")
+
+  depends_on = [
+    helm_release.external_secrets,
+    time_sleep.wait_for_webhook
+  ]
+}
+
+resource "kubectl_manifest" "github-private-repo-creds" {
+  yaml_body = file("input-files/github-private-repo-creds.yaml")
+
+  depends_on = [
+    helm_release.external_secrets,
+    time_sleep.wait_for_webhook
+  ]
+}
+
+resource "kubectl_manifest" "onepassword-connect-credentials" {
+  yaml_body = file("input-files/onepassword-connect-credentials.yaml")
+
+  depends_on = [
+    helm_release.onepassword,
+    time_sleep.wait_for_webhook
+  ]
+}
+
 # Wait for ClusterSecretStore to be ready
 resource "time_sleep" "wait_for_cluster_secret_store" {
-  depends_on = [kubectl_manifest.cluster_secret_store]
+  depends_on = [
+    kubectl_manifest.cluster_secret_store,
+    kubectl_manifest.github_client_secret,
+    kubectl_manifest.github-private-repo-creds,
+    kubectl_manifest.onepassword-connect-credentials
+    ]
 
   create_duration = "15s" # Adjust based on readiness time
 }

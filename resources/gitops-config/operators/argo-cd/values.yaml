@@ -1,6 +1,6 @@
 configs:
   cm:
-    url: https://argocd.local.damman.tech
+    # url: https://argocd.local.damman.tech
     exec.enabled: true
     admin.enabled: true
     resource.exclusions: "[{apiGroups: ['cilium.io'], kinds: ['CiliumIdentity'], clusters: ['*']}]"
@@ -16,8 +16,8 @@ configs:
               - name: sironite
                 teams:
                   - DevOps
-  params:
-    server.insecure: true
+  # params:
+  #   # server.insecure: true
   rbac:
     policy.csv: |
       g, sironite:DevOps, role:admin
@@ -100,13 +100,13 @@ dex:
     operator: Equal
     value: "true"
     effect: NoSchedule
-  resources:
-    limits:
-      cpu: 1
-      memory: 100Mi
-    requests:
-      cpu: 1m
-      memory: 50Mi
+  # resources:
+  #   limits:
+  #     cpu: 1
+  #     memory: 100Mi
+  #   requests:
+  #     cpu: 1m
+  #     memory: 50Mi
 
 notificationsController:
   tolerations:
