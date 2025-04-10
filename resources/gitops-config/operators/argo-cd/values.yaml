@@ -1,15 +1,9 @@
 configs:
   cm:
     url: https://argocd.local.damman.tech
-    exec.enabled: "true"
-    admin.enabled: "true"
-    resource.exclusions: |
-      - apiGroups:
-        - cilium.io
-        kinds:
-        - CiliumIdentity
-        clusters:
-        - "*"
+    exec.enabled: true
+    admin.enabled: true
+    resource.exclusions: "[{apiGroups: ['cilium.io'], kinds: ['CiliumIdentity'], clusters: ['*']}]"
     dex.config: |
       connectors:
         - type: github
@@ -23,7 +17,7 @@ configs:
                 teams:
                   - DevOps
   params:
-    server.insecure: "true"
+    server.insecure: true
   rbac:
     policy.csv: |
       g, sironite:DevOps, role:admin
