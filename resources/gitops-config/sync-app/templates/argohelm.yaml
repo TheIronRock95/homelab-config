@@ -2,14 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
   name: argo-helm
   namespace: argocd 
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     component: operators
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -20,12 +20,8 @@ spec:
       values: |
         projects:
           operators:
-              namespace: argocd
-              finalizers:
-              - resources-finalizer.argocd.argoproj.io
-          applications:
-              namespace: argocd
-              finalizers:
+            namespace: argocd
+            finalizers:
               - resources-finalizer.argocd.argoproj.io
   destination:
     server: https://kubernetes.default.svc
