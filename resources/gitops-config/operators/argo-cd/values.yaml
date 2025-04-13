@@ -1,6 +1,6 @@
 configs:
   cm:
-    # url: https://argocd.local.damman.tech
+    url: https://argocd.local.damman.tech
     exec.enabled: true
     admin.enabled: true
     resource.exclusions: "[{apiGroups: ['cilium.io'], kinds: ['CiliumIdentity'], clusters: ['*']}]"
@@ -16,8 +16,8 @@ configs:
               - name: sironite
                 teams:
                   - DevOps
-  # params:
-  #   # server.insecure: true
+  params:
+    server.insecure: true
   rbac:
     policy.csv: |
       g, sironite:DevOps, role:admin
