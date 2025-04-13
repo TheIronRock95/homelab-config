@@ -31,7 +31,7 @@ spec:
           apps:
             namespace: argocd
             finalizers:
-              - resources-finalizer.argocd.argoproj.io
+              - resources-finalizer.argocd.argoproj.ios
             sourceRepos:
               - '*'
             destinations:
@@ -44,4 +44,5 @@ spec:
     syncOptions:
       - CreateNamespace=true
     automated:
+      prune: true
       selfHeal: true
