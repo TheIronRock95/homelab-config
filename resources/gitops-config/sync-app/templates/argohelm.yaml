@@ -23,15 +23,14 @@ spec:
             namespace: argocd
             finalizers:
               - resources-finalizer.argocd.argoproj.io
-            spec:
-              sourceRepos:
-                - '*'
-              destinations:
-                - namespace: '*'
-                  server: '*'
+            sourceRepos:
+              - '*'
+            destinations:
+              - namespace: '*'
+                server: '*'
   destination:
     server: https://kubernetes.default.svc
-    namespace: onepassword
+    namespace: argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
