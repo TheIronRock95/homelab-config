@@ -13,7 +13,8 @@ module "talos" {
 
   cilium = {
     install = file("${path.module}/talos/inline-manifests/cilium-install.yaml")
-    values  = file("${path.module}/talos/inline-manifests/values.yaml")
+    values = file(abspath("${path.module}/../gitops-config/operators/cilium/values.yaml"))
+    # values  = file("${path.module}/talos/inline-manifests/values.yaml")
   }
 
   cluster = {

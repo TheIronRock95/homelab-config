@@ -32,29 +32,29 @@ spec:
     spec:
       restartPolicy: OnFailure
       tolerations:
-        - operator: Exists
-        - effect: NoSchedule
-          operator: Exists
-        - effect: NoExecute
-          operator: Exists
-        - effect: PreferNoSchedule
-          operator: Exists
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoSchedule
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoExecute
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: PreferNoSchedule
+      - operator: Exists
+      - effect: NoSchedule
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
+      - effect: PreferNoSchedule
+        operator: Exists
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoExecute
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: PreferNoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: Exists
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
       serviceAccountName: cilium-install
       hostNetwork: true
       containers:
@@ -69,18 +69,18 @@ spec:
         - name: KUBERNETES_SERVICE_PORT
           value: "6443"
         volumeMounts:
-          - name: values
-            mountPath: /root/app/values.yaml
-            subPath: values.yaml
-        command:
-          - cilium
-          - install
-          - --version=v1.17.1
-          - --set
-          - kubeProxyReplacement=true
-          - --values
-          - /root/app/values.yaml
-      volumes:
         - name: values
-          configMap:
-            name: cilium-values
+          mountPath: /root/app/values.yaml
+          subPath: values.yaml
+        command:
+        - cilium
+        - install
+        - --version=v1.17.2
+        - --set
+        - kubeProxyReplacement=true
+        - --values
+        - /root/app/values.yaml
+      volumes:
+      - name: values
+        configMap:
+          name: cilium-values

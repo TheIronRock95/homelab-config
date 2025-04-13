@@ -12,8 +12,10 @@ domainFilters:
 - local.damman.tech
 
 sources:
-- gateway-httproute
+- crd
+- service
 - ingress
+- gateway-httproute
 
 policy: sync
 
@@ -61,6 +63,12 @@ provider:
       successThreshold: 1
     service:
       port: 8080
+
+tolerations:
+- key: node-role.kubernetes.io/control-plane
+  operator: Equal
+  value: "true"
+  effect: NoSchedule
 
 extraArgs:
 - --ignore-ingress-tls-spec
