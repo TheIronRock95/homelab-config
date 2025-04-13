@@ -28,6 +28,15 @@ spec:
             destinations:
               - namespace: '*'
                 server: '*'
+          apps:
+            namespace: argocd
+            finalizers:
+              - resources-finalizer.argocd.argoproj.io
+            sourceRepos:
+              - '*'
+            destinations:
+              - namespace: '*'
+                server: '*'
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
