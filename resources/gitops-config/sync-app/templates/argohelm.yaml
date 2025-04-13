@@ -19,14 +19,14 @@ spec:
     helm:
       values: |
         projects:
-        operators:
-            namespace: argocd
-            finalizers:
-            - resources-finalizer.argocd.argoproj.io
-        applications:
-            namespace: argocd
-            finalizers:
-            - resources-finalizer.argocd.argoproj.io
+          operators:
+              namespace: argocd
+              finalizers:
+              - resources-finalizer.argocd.argoproj.io
+          applications:
+              namespace: argocd
+              finalizers:
+              - resources-finalizer.argocd.argoproj.io
   destination:
     server: https://kubernetes.default.svc
     namespace: onepassword
