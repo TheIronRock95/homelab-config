@@ -11,7 +11,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: operators
+  project: default
   sources:
     - repoURL: https://argoproj.github.io/argo-helm
       chart: argo-cd
