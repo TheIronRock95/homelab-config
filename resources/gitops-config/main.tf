@@ -152,7 +152,7 @@ resource "helm_release" "argo_cd" {
 resource "helm_release" "argo_helm" {
   name       = "argocd-apps"
   repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-helm"
+  chart      = "argocd-apps"
   namespace  = kubernetes_namespace.namespaces["argocd"].metadata[0].name
   version    = "2.0.2"
   values = [

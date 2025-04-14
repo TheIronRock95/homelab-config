@@ -21,48 +21,29 @@ spec:
         projects:
           operators:
             namespace: argocd
-            additionalLabels: {}
-            additionalAnnotations: {}
-            permitOnlyProjectScopedClusters: false
+            displayName: Operators
             finalizers:
               - resources-finalizer.argocd.argoproj.io
-            description: Example Project
-            sourceRepos:
-              - '*'
+            clusterResourceWhitelist:
+            - group: '*'
+              kind: '*'
             destinations:
-              - namespace: '*'
-                server: '*'
-            clusterResourceWhitelist: []
-            clusterResourceBlacklist: []
-            namespaceResourceBlacklist: []
-            namespaceResourceWhitelist:
-              - group: '*'
-                kind: '*'
-            orphanedResources: {}
-            roles: []
-            syncWindows: []
+            - namespace: '*'
+              server: '*'
+            sourceRepos:
+            - '*'
           apps:
             namespace: argocd
-            additionalLabels: {}
-            additionalAnnotations: {}
-            permitOnlyProjectScopedClusters: false
+            displayName: Apps
             finalizers:
               - resources-finalizer.argocd.argoproj.io
-            description: Example Project
-            sourceRepos:
-              - '*'
+            clusterResourceWhitelist:
+            - group: '*'
+              kind: '*'
             destinations:
-              - namespace: '*'
-                server: '*'
-            clusterResourceWhitelist: []
-            clusterResourceBlacklist: []
-            namespaceResourceBlacklist: []
-            namespaceResourceWhitelist:
-              - group: '*'
-                kind: '*'
-            orphanedResources: {}
-            roles: []
-            syncWindows: []
+            - namespace: '*'
+              server: '*'
+            sourceRepos
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
