@@ -25,25 +25,26 @@ spec:
             finalizers:
               - resources-finalizer.argocd.argoproj.io
             clusterResourceWhitelist:
-            - group: '*'
-              kind: '*'
+              - group: '*'
+                kind: '*'
             destinations:
-            - namespace: '*'
-              server: '*'
+              - namespace: '*'
+                server: '*'
             sourceRepos:
-            - '*'
+              - '*'
           apps:
             namespace: argocd
             displayName: Apps
             finalizers:
               - resources-finalizer.argocd.argoproj.io
             clusterResourceWhitelist:
-            - group: '*'
-              kind: '*'
+              - group: '*'
+                kind: '*'
             destinations:
-            - namespace: '*'
-              server: '*'
-            sourceRepos
+              - namespace: '*'
+                server: '*'
+            sourceRepos:
+              - '*'
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
