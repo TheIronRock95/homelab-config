@@ -208,7 +208,7 @@ resource "null_resource" "deploy_root_app" {
   }
 
   depends_on = [
-    helm_release.argo_cd
+    helm_release.argo_cd,
     helm_release.argo_helm
   ]
 }
