@@ -159,12 +159,14 @@ resource "helm_release" "argo_helm" {
     yamlencode({
       projects = {
         operators = {
-          namespace  = "argocd"
-          finalizers = [
-            "resources-finalizer.argocd.argoproj.io"
-          ]
-          sourceRepos = [
-            "*"
+          namespace                = "argocd"
+          displayName             = "Operators"
+          finalizers              = ["resources-finalizer.argocd.argoproj.io"]
+          clusterResourceWhitelist = [
+            {
+              group = "*"
+              kind  = "*"
+            }
           ]
           destinations = [
             {
@@ -172,22 +174,26 @@ resource "helm_release" "argo_helm" {
               server    = "*"
             }
           ]
+          sourceRepos = ["*"]
         }
-      }
-      apps = {
-        namespace  = "argocd"
-        finalizers = [
-          "resources-finalizer.argocd.argoproj.io"
-        ]
-        sourceRepos = [
-          "*"
-        ]
-        destinations = [
-          {
-            namespace = "*"
-            server    = "*"
-          }
-        ]
+        apps = {
+          namespace                = "argocd"
+          displayName             = "Apps"
+          finalizers              = ["resources-finalizer.argocd.argoproj.io"]
+          clusterResourceWhitelist = [
+            {
+              group = "*"
+              kind  = "*"
+            }
+          ]
+          destinations = [
+            {
+              namespace = "*"
+              server    = "*"
+            }
+          ]
+          sourceRepos = ["*"]
+        }
       }
     })
   ]
