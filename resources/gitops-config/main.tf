@@ -148,6 +148,55 @@ resource "helm_release" "argo_cd" {
   ]
 }
 
+# ### Install Argo apps
+resource "helm_release" "argo_helm" {
+  name       = "argocd-apps"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-helm"
+  namespace  = kubernetes_namespace.namespaces["argocd"].metadata[0].name
+  version    = "2.0.2"
+  values = [
+    yamlencode({
+      projects = {
+        operators = {
+          namespace  = "argocd"
+          finalizers = [
+            "resources-finalizer.argocd.argoproj.io"
+          ]
+          sourceRepos = [
+            "*"
+          ]
+          destinations = [
+            {
+              namespace = "*"
+              server    = "*"
+            }
+          ]
+        }
+      }
+      apps = {
+        namespace  = "argocd"
+        finalizers = [
+          "resources-finalizer.argocd.argoproj.io"
+        ]
+        sourceRepos = [
+          "*"
+        ]
+        destinations = [
+          {
+            namespace = "*"
+            server    = "*"
+          }
+        ]
+      }
+    })
+  ]
+  depends_on = [
+    helm_release.argo_cd
+  ]
+}
+
+
 # ### Deploy Root App
 resource "null_resource" "deploy_root_app" {
   provisioner "local-exec" {
@@ -160,6 +209,7 @@ resource "null_resource" "deploy_root_app" {
 
   depends_on = [
     helm_release.argo_cd
+    helm_release.argo_helm
   ]
 }
 
