@@ -3,13 +3,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-helm
-  namespace: argocd 
+  namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   labels:
     component: operators
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -21,22 +21,48 @@ spec:
         projects:
           operators:
             namespace: argocd
+            additionalLabels: {}
+            additionalAnnotations: {}
+            permitOnlyProjectScopedClusters: false
             finalizers:
               - resources-finalizer.argocd.argoproj.io
+            description: Example Project
             sourceRepos:
               - '*'
             destinations:
               - namespace: '*'
                 server: '*'
+            clusterResourceWhitelist: []
+            clusterResourceBlacklist: []
+            namespaceResourceBlacklist: []
+            namespaceResourceWhitelist:
+              - group: '*'
+                kind: '*'
+            orphanedResources: {}
+            roles: []
+            syncWindows: []
           apps:
             namespace: argocd
+            additionalLabels: {}
+            additionalAnnotations: {}
+            permitOnlyProjectScopedClusters: false
             finalizers:
-              - resources-finalizer.argocd.argoproj.ios
+              - resources-finalizer.argocd.argoproj.io
+            description: Example Project
             sourceRepos:
               - '*'
             destinations:
               - namespace: '*'
                 server: '*'
+            clusterResourceWhitelist: []
+            clusterResourceBlacklist: []
+            namespaceResourceBlacklist: []
+            namespaceResourceWhitelist:
+              - group: '*'
+                kind: '*'
+            orphanedResources: {}
+            roles: []
+            syncWindows: []
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
