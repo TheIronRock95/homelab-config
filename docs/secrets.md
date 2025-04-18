@@ -129,7 +129,35 @@ helm install external-secrets external-secrets-operator/external-secrets \
   --set installCRDs=true
 ```
 
-### 3. Apply ExternalSecrets Definitions
+### 3. Apply the SecretStore (before ESO)
+Add this YAML (or point to your actual file):
+
+```yaml
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterSecretStore
+metadata:
+  name: onepassword-connect
+spec:
+  provider:
+    onepassword:
+      auth:
+        secretRef:
+          name: onepassword-connect-token-external-secret
+          namespace: external-secrets
+          key: onepassword-connect-token
+      connectHost: http://onepassword-connect.onepassword.svc.cluster.local:8080
+```
+Apply it with:
+
+```bash
+kubectl apply -f gitops-config/input-files/cluster-secret-store.yaml
+```
+
+
+ >  🔐 This ClusterSecretStore enables any namespace to reference secrets from your 1Password vault.
+
+
+### 4. Apply ExternalSecrets Definitions
 Once both services are running, apply the ExternalSecret resources:
 
 ```bash
