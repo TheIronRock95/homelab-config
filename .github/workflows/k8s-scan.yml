@@ -55,7 +55,7 @@ jobs:
           output-file: kube-linter.sarif
 
       - name: Upload KubeLinter results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: kube-linter.sarif
 
@@ -105,6 +105,6 @@ jobs:
           output: kubesec-results.sarif
 
       - name: Upload KubeSec SARIF to GitHub Security
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: kubesec-results.sarif
