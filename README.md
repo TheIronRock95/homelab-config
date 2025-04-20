@@ -132,6 +132,10 @@ Deployed and managed through Argo CD:
 - `sync-app` — Root Argo CD app syncing the rest
 
 ---
+## 📓 Docs
+- [`docs/`](docs/README.md) — Wiki-style knowledge base for configuring, managing, and maintaining your homelab environment.
+
+---
 
 ## 🤝 Contributing
 
