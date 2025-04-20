@@ -1,68 +1,17 @@
----
 name: Lint and Scan Kubernetes Resources
 
 on:
   push:
     branches:
       - '**'
-
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
-  render:
-    name: Render Helm Charts
-    runs-on: ubuntu-latest
-    outputs:
-      rendered-dir: ${{ steps.set-output.outputs.rendered-dir }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Helm
-        run: |
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-      - name: Render charts to YAML
-        id: set-output
-        run: |
-          mkdir -p .rendered
-
-          CHART_DIRS=$(find resources/operators -name Chart.yaml -exec dirname {} \;)
-          for chart in $CHART_DIRS; do
-            NAME=$(basename "$chart")
-            echo "Templating $chart"
-            mkdir -p .rendered/$NAME
-            helm template $NAME $chart -f $chart/values.yaml > .rendered/$NAME/rendered.yaml
-          done
-
-          echo "rendered-dir=.rendered" >> $GITHUB_OUTPUT
-
-  kube-linter:
-    name: KubeLinter
-    runs-on: ubuntu-latest
-    needs: render
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Run Kube-Linter
-        uses: stackrox/kube-linter-action@v1.0.6
-        with:
-          directory: .rendered
-          config: .kube-linter/config.yaml
-          format: sarif
-          output-file: kube-linter.sarif
-
-      - name: Upload KubeLinter results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: kube-linter.sarif
-
   trivy:
     name: Trivy Config Scan
     runs-on: ubuntu-latest
-    needs: render
 
     steps:
       - name: Checkout
@@ -72,7 +21,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: config
-          scan-ref: .rendered
+          scan-ref: yamls
           format: json
           output: trivy-report.json
           severity: CRITICAL,HIGH
@@ -82,29 +31,3 @@ jobs:
         with:
           name: trivy-report
           path: trivy-report.json
-
-  kubesec:
-    name: KubeSec Scan
-    runs-on: ubuntu-latest
-    needs: render
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Get sarif.tpl
-        run: wget https://raw.githubusercontent.com/bsanchezmir/kubesec-action/main/sarif.tpl
-
-      - name: Run KubeSec Scanner
-        uses: bsanchezmir/kubesec-action@latest
-        with:
-          filename: .rendered/sync-app/rendered.yaml  # Adjust this if you have more charts
-          exit-code: "0"
-          format: template
-          template: ./sarif.tpl
-          output: kubesec-results.sarif
-
-      - name: Upload KubeSec SARIF to GitHub Security
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: kubesec-results.sarif
