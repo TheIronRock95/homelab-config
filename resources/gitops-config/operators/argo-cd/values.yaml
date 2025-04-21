@@ -1,6 +1,6 @@
 configs:
   cm:
-    url: https://argocd.local.damman.tech
+    url: https://argocd.svc.damman.tech
     exec.enabled: true
     admin.enabled: true
     resource.exclusions: "[{apiGroups: ['cilium.io'], kinds: ['CiliumIdentity'], clusters: ['*']}]"
