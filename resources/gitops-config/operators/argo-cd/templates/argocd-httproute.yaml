@@ -9,7 +9,7 @@ spec:
     namespace: kube-system
     sectionName: https-listener
   hostnames:
-    - argocd.local.damman.tech
+    - argocd.svc.damman.tech
   rules:
     - matches:
         - path:
