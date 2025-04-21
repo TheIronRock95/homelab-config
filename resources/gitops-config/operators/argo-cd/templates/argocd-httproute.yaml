@@ -5,7 +5,7 @@ metadata:
   name: argocd-httproute
 spec:
   parentRefs:
-  - name: cilium-gateway
+  - name: svc-gateway
     namespace: kube-system
     sectionName: https-listener
   hostnames:
