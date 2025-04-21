@@ -10,6 +10,8 @@ namespaced: false
 
 domainFilters:
 - local.damman.tech
+- svc.damman.tech
+- app.damman.tech
 
 sources:
 - crd
