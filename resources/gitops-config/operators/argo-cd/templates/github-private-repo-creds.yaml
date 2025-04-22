@@ -21,7 +21,7 @@ spec:
         type: git
         url: https://github.com/TheIronRock95/homelab-config.git
         githubAppID: "392111"
-        githubAppInstallationID: "64956345"
+        githubAppInstallationID: "65046796"
         githubAppPrivateKey: '{{ `{{ .argoPrivateKey }}` }}'
   data:
   - secretKey: argoPrivateKey
