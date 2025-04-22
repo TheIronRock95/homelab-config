@@ -2,7 +2,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: github-private-repo-creds
+  name: github-private-config-creds
   namespace: argocd
 spec:
   secretStoreRef:
@@ -10,7 +10,7 @@ spec:
     name: onepassword-connect
   target:
     creationPolicy: Owner
-    name: github-private-repo-creds
+    name: github-private-config-creds
     template:
       engineVersion: v2
       type: Opaque
