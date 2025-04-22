@@ -10,7 +10,7 @@ spec:
     name: onepassword-connect
   target:
     creationPolicy: Owner
-    name: github-private-repo-creds
+    name: github-private-homelab-config-creds
     template:
       engineVersion: v2
       type: Opaque
@@ -40,7 +40,7 @@ spec:
     name: onepassword-connect
   target:
     creationPolicy: Owner
-    name: github-private-repo-creds
+    name: github-private-homelab-apps-creds
     template:
       engineVersion: v2
       type: Opaque
