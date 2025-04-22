@@ -4,10 +4,12 @@ kind: Gateway
 metadata:
   name: app-gateway
   annotations:
-    io.cilium/lb-ipam-ips: "10.0.10.241"
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   gatewayClassName: cilium
+  addresses:
+    - type: "IPAddress"
+      value: "10.0.10.241"
   listeners:
     - name: http-listener
       protocol: HTTP
