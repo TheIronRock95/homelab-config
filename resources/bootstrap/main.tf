@@ -46,16 +46,16 @@ module "talos" {
       ram_dedicated = 4096
       disk_size     = 100
     }
-    "ctrl-02" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "controlplane"
-      ip            = "10.0.10.212"
-      mac_address   = "BC:24:11:2E:C8:02"
-      vm_id         = 802
-      cpu           = 2
-      ram_dedicated = 4096
-      disk_size     = 100
-    }
+    # "ctrl-02" = {
+    #   host_node     = "dmn-sk-pve-02"
+    #   machine_type  = "controlplane"
+    #   ip            = "10.0.10.212"
+    #   mac_address   = "BC:24:11:2E:C8:02"
+    #   vm_id         = 802
+    #   cpu           = 2
+    #   ram_dedicated = 4096
+    #   disk_size     = 100
+    # }
     "work-00" = {
       host_node     = "dmn-sk-pve-01"
       machine_type  = "worker"
@@ -86,26 +86,26 @@ module "talos" {
       ram_dedicated = 8192
       disk_size     = 250
     }
-    "work-03" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "worker"
-      ip            = "10.0.10.216"
-      mac_address   = "BC:24:11:2E:08:03"
-      vm_id         = 813
-      cpu           = 4
-      ram_dedicated = 8192
-      disk_size     = 250
-    }
-    "work-04" = {
-      host_node     = "dmn-sk-pve-02"
-      machine_type  = "worker"
-      ip            = "10.0.10.217"
-      mac_address   = "BC:24:11:2E:08:04"
-      vm_id         = 814
-      cpu           = 2
-      ram_dedicated = 4096
-      disk_size     = 250
-    }
+    # "work-03" = {
+    #   host_node     = "dmn-sk-pve-02"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.216"
+    #   mac_address   = "BC:24:11:2E:08:03"
+    #   vm_id         = 813
+    #   cpu           = 4
+    #   ram_dedicated = 8192
+    #   disk_size     = 250
+    # }
+    # "work-04" = {
+    #   host_node     = "dmn-sk-pve-02"
+    #   machine_type  = "worker"
+    #   ip            = "10.0.10.217"
+    #   mac_address   = "BC:24:11:2E:08:04"
+    #   vm_id         = 814
+    #   cpu           = 2
+    #   ram_dedicated = 4096
+    #   disk_size     = 250
+    # }
   }
 }
 
