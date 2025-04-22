@@ -17,12 +17,14 @@ spec:
     chart: longhorn
     targetRevision: 1.8.1
     helm:
-      valueFiles:
-      - $values/resources/gitops-config/operators/longhorn/values.yaml
-  - repoURL: 'https://github.com/TheIronRock95/homelab-config'
-    path: resources/gitops-config/operators/longhorn
-    targetRevision: HEAD
-    ref: values
+      values: |
+        preUpgradeChecker:
+            jobEnabled: false
+        tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
   destination:
     namespace: longhorn-system
     server: https://kubernetes.default.svc
