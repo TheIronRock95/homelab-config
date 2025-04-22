@@ -24,7 +24,7 @@ spec:
     targetRevision: HEAD
     ref: values
   destination:
-    namespace: longhorn
+    namespace: longhorn-system
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
