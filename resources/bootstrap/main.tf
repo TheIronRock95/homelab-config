@@ -87,7 +87,7 @@ module "talos" {
       disk_size     = 250
     }
     "work-03" = {
-      host_node     = "dmn-sk-pve-02"
+      host_node     = "dmn-sk-pve-01"
       machine_type  = "worker"
       ip            = "10.0.10.216"
       mac_address   = "BC:24:11:2E:08:03"
