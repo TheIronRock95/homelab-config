@@ -27,4 +27,4 @@ spec:
   - secretKey: argoPrivateKey
     remoteRef:
       key: github-argo-app
-      property: privateargorepo.2023-09-19.private-key.pem
+      property: argocd-private-acces.2025-04-22.private-key.pem
