@@ -64,7 +64,7 @@ module "talos" {
       vm_id         = 810
       cpu           = 2
       ram_dedicated = 4096
-      disk_size     = 100
+      disk_size     = 250
     }
     "work-01" = {
       host_node     = "dmn-sk-pve-01"

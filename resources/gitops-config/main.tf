@@ -11,12 +11,23 @@ resource "kubernetes_namespace" "namespaces" {
   }
 }
 
+resource "kubernetes_namespace" "longhorn_system" {
+  metadata {
+    name = "longhorn-system"
+
+    labels = {
+      "pod-security.kubernetes.io/enforce" = "privileged"
+    }
+  }
+}
+
 resource "kubectl_manifest" "apply_secrets" {
   count     = length(local.manifests)
   yaml_body = local.manifests[count.index]
 
   depends_on = [
-    kubernetes_namespace.namespaces
+    kubernetes_namespace.namespaces,
+    kubernetes_namespace.longhorn_system
   ]
 }
 
