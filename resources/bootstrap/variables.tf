@@ -12,3 +12,9 @@ variable "proxmox" {
   })
   sensitive = true
 }
+
+variable "kube_config_path" {
+  description = "Pad naar het kubeconfig-bestand"
+  type        = string
+  default     = "~/.kube/config"
+}
