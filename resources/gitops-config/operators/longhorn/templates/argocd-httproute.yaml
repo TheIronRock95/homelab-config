@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: longhorn-httproute
+  namespace: longhorn-system
+spec:
+  parentRefs:
+    - name: svc-gateway
+      namespace: kube-system
+      sectionName: https-listener
+  hostnames:
+    - longhorn.svc.damman.tech
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: longhorn-frontend
+          port: 80

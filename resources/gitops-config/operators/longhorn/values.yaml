@@ -1,0 +1,13 @@
+preUpgradeChecker:
+  jobEnabled: false
+
+tolerations:
+- key: node-role.kubernetes.io/control-plane
+  operator: Equal
+  value: "true"
+  effect: NoSchedule
+
+defaultBackupStore:
+  backupTarget: nfs://10.0.10.205:/volume1/longhorn
+  backupTargetCredentialSecret: ""
+  pollInterval: 300
