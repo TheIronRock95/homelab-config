@@ -5,8 +5,9 @@ metadata:
   name: backup-2xdaily
   namespace: longhorn-system
 spec:
+  name: backup-2xdaily
+  task: backup
   cron: "0 2,14 * * *"
-  task: "backup"
   retain: 7
   concurrency: 1
   groups:
@@ -20,8 +21,9 @@ metadata:
   name: snapshot-hourly
   namespace: longhorn-system
 spec:
+  name: snapshot-hourly
+  task: snapshot
   cron: "0 * * * *"
-  task: "snapshot"
   retain: 24
   concurrency: 1
   groups:
