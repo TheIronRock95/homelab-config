@@ -24,7 +24,7 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: wildcard-tls-cert
+          - name: wildcard-svc-gateway-tls-cert
             kind: Secret
       allowedRoutes:
         namespaces:
