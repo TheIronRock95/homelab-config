@@ -11,3 +11,27 @@ defaultBackupStore:
   backupTarget: nfs://10.0.10.205:/volume1/longhorn
   backupTargetCredentialSecret: ""
   pollInterval: 300
+
+longhornManager:
+  defaultSettings:
+    recurringJobs: |
+      [
+        {
+          "name": "backup-2xdaily",
+          "groups": ["default"],
+          "task": "backup",
+          "cron": "0 2,14 * * *",
+          "retain": 7,
+          "concurrency": 1,
+          "labels": {}
+        },
+        {
+          "name": "snapshot-hourly",
+          "groups": ["default"],
+          "task": "snapshot",
+          "cron": "0 * * * *",
+          "retain": 24,
+          "concurrency": 1,
+          "labels": {}
+        }
+      ]
