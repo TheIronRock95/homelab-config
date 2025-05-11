@@ -10,14 +10,14 @@ spec:
     - type: "IPAddress"
       value: "10.0.10.240"
   listeners:
-    - name: http-listener
+    - name: svc-http-listener
       protocol: HTTP
       port: 80
       hostname: "*.svc.damman.tech"
       allowedRoutes:
         namespaces:
           from: All
-    - name: https-listener
+    - name: svc-https-listener
       protocol: HTTPS
       port: 443
       hostname: "*.svc.damman.tech"

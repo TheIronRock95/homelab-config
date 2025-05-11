@@ -7,7 +7,7 @@ spec:
   parentRefs:
     - name: svc-gateway
       namespace: kube-system
-      sectionName: https-listener
+      sectionName: svc-https-listener
   hostnames:
     - longhorn.svc.damman.tech
   rules:
