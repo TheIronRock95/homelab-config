@@ -1,8 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "labels": ["renovate", "dependencies"],
-  "dependencyDashboard": true,
+  "extends": [
+    "config:base"
+  ],
 
   "argocd": {
     "enabled": true,
@@ -11,68 +11,21 @@
     ]
   },
 
-  "regexManagers": [
+  "packageRules": [
     {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/argocd.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>argo-cd)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      "matchPackagePatterns": [
+        "*"
       ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://argoproj.github.io/argo-helm/argo-cd",
-      "currentValueTemplate": "{{currentValue}}"
-    },
-    {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/argocd-apps.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>argocd-apps)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
       ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://argoproj.github.io/argo-helm/argocd-apps",
-      "currentValueTemplate": "{{currentValue}}"
-    },
-    {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/cilium.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>cilium)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://helm.cilium.io/cilium",
-      "currentValueTemplate": "{{currentValue}}"
-    },
-    {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/external-secrets.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>external-secrets)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://charts.external-secrets.io/external-secrets",
-      "currentValueTemplate": "{{currentValue}}"
-    },
-    {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/longhorn.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>longhorn)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://charts.longhorn.io/longhorn",
-      "currentValueTemplate": "{{currentValue}}"
-    },
-    {
-      "fileMatch": ["resources/gitops-config/sync-app/templates/onepassword-connect.yaml"],
-      "matchStrings": [
-        "chart:\\s*(?<chart>connect)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "https://1password.github.io/connect-helm-charts/connect",
-      "currentValueTemplate": "{{currentValue}}"
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
     }
   ],
-
-  "helm-values": {
-    "enabled": true
-  },
-
-  "terraform": {
-    "enabled": true
-  }
-}
+  
+  "includePaths": [
+    "resources/gitops-config/sync-app/templates/**"
+  ]
+} 
