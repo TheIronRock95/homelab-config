@@ -15,74 +15,83 @@
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://argoproj.github.io/argo-helm\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://argoproj.github.io/argo-helm/\\s*chart:\\s*(?<depName>argo-cd)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://charts.jetstack.io\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://charts.jetstack.io\\s*chart:\\s*(?<depName>cert-manager)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://helm.cilium.io/\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://helm.cilium.io/\\s*chart:\\s*(?<depName>cilium)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://repos.emqx.io/charts\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://repos.emqx.io/charts\\s*chart:\\s*(?<depName>emqx)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://kubernetes-sigs.github.io/external-dns/\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://kubernetes-sigs.github.io/external-dns/\\s*chart:\\s*(?<depName>external-dns)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://charts.external-secrets.io\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://charts.external-secrets.io\\s*chart:\\s*(?<depName>external-secrets)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://geek-cookbook.github.io/charts/\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://geek-cookbook.github.io/charts/\\s*chart:\\s*(?<depName>home-assistant)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://charts.longhorn.io\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://charts.longhorn.io\\s*chart:\\s*(?<depName>longhorn)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     },
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://1password.github.io/connect-helm-charts\\s*chart:\\s*(?<depName>[^\\s]+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://1password.github.io/connect-helm-charts\\s*chart:\\s*(?<depName>connect)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "depNameTemplate": "{{depName}}",
+      "currentValueTemplate": "{{currentValue}}"
     }
   ]
 }
