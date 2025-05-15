@@ -13,7 +13,7 @@ metadata:
 spec:
   project: operators
   sources:
-    - repoURL: 'https://charts.jetstack.io/'
+    - repoURL: https://charts.jetstack.io
       chart: cert-manager
       targetRevision: 1.17.1
       helm:
