@@ -13,7 +13,7 @@ metadata:
 spec:
   project: apps
   sources:
-  - repoURL:' https://repos.emqx.io/charts/'
+  - repoURL: https://repos.emqx.io/charts/
     chart: emqx
     targetRevision: 5.8.6
     helm:
