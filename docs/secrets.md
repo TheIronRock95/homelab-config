@@ -133,7 +133,7 @@ helm install external-secrets external-secrets-operator/external-secrets \
 Add this YAML (or point to your actual file):
 
 ```yaml
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ClusterSecretStore
 metadata:
   name: onepassword-connect
@@ -172,7 +172,7 @@ kubectl apply -f gitops-config/input-files/onepassword-connect-credentials.yaml
 
 ### GitHub Private Repo Credentials for Argo CD
 ```yaml
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: github-private-repo-creds
@@ -204,7 +204,7 @@ spec:
 
 ### GitHub OAuth Client Secret for Argo CD SSO
 ```yaml
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: github-client-secret
@@ -233,7 +233,7 @@ spec:
 
 ### 1Password Connect Secret
 ```yaml
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: onepassword-connect-credentials
