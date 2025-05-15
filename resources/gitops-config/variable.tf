@@ -19,7 +19,7 @@ variable "onepassword_version" {
 variable "external_secrets_version" {
   description = "Versie van de External Secrets chart"
   type        = string
-  default     = "0.14.2"
+  default     = "0.17.0"
 }
 
 variable "namespaces" {
