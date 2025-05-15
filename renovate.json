@@ -1,104 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "mergeConfidence:all-badges",
     "config:recommended"
   ],
   "dependencyDashboard": false,
-
-  "helm": {
-    "repositories": [
-      { "name": "argo-helm", "url": "https://argoproj.github.io/argo-helm" },
-      { "name": "jetstack", "url": "https://charts.jetstack.io" },
-      { "name": "cilium", "url": "https://helm.cilium.io" },
-      { "name": "emqx", "url": "https://repos.emqx.io/charts" },
-      { "name": "external-dns", "url": "https://kubernetes-sigs.github.io/external-dns/" },
-      { "name": "external-secrets", "url": "https://charts.external-secrets.io" },
-      { "name": "home-assistant", "url": "https://geek-cookbook.github.io/charts/" },
-      { "name": "longhorn", "url": "https://charts.longhorn.io" },
-      { "name": "connect", "url": "https://1password.github.io/connect-helm-charts" }
-    ]
-  },
-
-  "packageRules": [
-    {
-      "matchPaths": ["^resources/gitops-config/main.tf$"],
-      "enabled": true
-    }
-  ],
-
   "regexManagers": [
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*https://argoproj.github.io/argo-helm\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
+        "repoURL:\\s*(?<registry>\\S+)\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
       "depNameTemplate": "{{depName}}"
-    },
+    }
+  ],
+  "packageRules": [
     {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://charts.jetstack.io\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://helm.cilium.io/\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://repos.emqx.io/charts\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://kubernetes-sigs.github.io/external-dns/\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://charts.external-secrets.io\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://geek-cookbook.github.io/charts/\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://charts.longhorn.io\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "matchStrings": [
-        "repoURL:\\s*https://1password.github.io/connect-helm-charts\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm",
-      "depNameTemplate": "{{depName}}"
+      "matchFiles": ["^resources/gitops-config/main.tf$"],
+      "managers": ["terraform"],
+      "enabled": true
     }
   ]
 }
