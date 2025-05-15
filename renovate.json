@@ -72,10 +72,6 @@
     "enabled": true
   },
 
-  "helm": {
-    "enabled": true
-  },
-
   "terraform": {
     "enabled": true
   }
