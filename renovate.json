@@ -1,24 +1,88 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "mergeConfidence:all-badges"
   ],
   "dependencyDashboard": false,
+  "packageRules": [
+    {
+      "matchPaths": ["^resources/gitops-config/main.tf$"],
+      "enabled": true
+    }
+  ],
   "regexManagers": [
     {
       "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "matchStrings": [
-        "repoURL:\\s*(?<registry>\\S+)\\s*chart:\\s*(?<depName>\\S+)\\s*targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "repoURL:\\s*https://argoproj.github.io/argo-helm\\s*chart:\\s*(argo-cd)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
       ],
       "datasourceTemplate": "helm",
       "depNameTemplate": "{{depName}}"
-    }
-  ],
-  "packageRules": [
+    },
     {
-      "matchFiles": ["^resources/gitops-config/main.tf$"],
-      "managers": ["terraform"],
-      "enabled": true
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://charts.jetstack.io\\s*chart:\\s*(cert-manager)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://helm.cilium.io/\\s*chart:\\s*(cilium)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://repos.emqx.io/charts\\s*chart:\\s*(emqx)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://kubernetes-sigs.github.io/external-dns/\\s*chart:\\s*(external-dns)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://charts.external-secrets.io\\s*chart:\\s*(external-secrets)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://geek-cookbook.github.io/charts/\\s*chart:\\s*(home-assistant)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://charts.longhorn.io\\s*chart:\\s*(longhorn)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
+    },
+    {
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "repoURL:\\s*https://1password.github.io/connect-helm-charts\\s*chart:\\s*(connect)\\s*targetRevision:\\s*(\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "depNameTemplate": "{{depName}}"
     }
   ]
 }
