@@ -8,19 +8,5 @@
     "fileMatch": [
       "resources/gitops-config/sync-app/templates/.*\\.yaml"
     ]
-  },
-
-  "packageRules": [
-    {
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
-    }
-  ]
+  }
 } 
