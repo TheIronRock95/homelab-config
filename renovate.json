@@ -9,11 +9,16 @@
     {
       "matchPaths": ["^resources/gitops-config/main.tf$"],
       "enabled": true
-    },
+    }
+  ],
+  "regexManagers": [
     {
-      "matchManagers": ["yaml"],
-      "matchPaths": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
-      "enabled": true
+      "fileMatch": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
+      "matchStrings": [
+        "chart:\\s*(?<depName>\\S+)\\s*.*?targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "helm",
+      "lookupNameTemplate": "argo-helm/{{depName}}"
     }
   ]
 }
