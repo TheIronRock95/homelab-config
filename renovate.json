@@ -1,8 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-      "mergeConfidence:all-badges",
-      "config:recommended"
+    "mergeConfidence:all-badges",
+    "config:recommended"
   ],
-  "dependencyDashboard": false
+  "dependencyDashboard": false,
+  "paths": [
+    "resources/gitops-config/sync-app/templates",
+    "resources/gitops-config/main.tf"
+  ]
 }
