@@ -5,9 +5,8 @@
   ],
 
   "argocd": {
-    "enabled": true,
-    "managerFilePatterns": [
-      "resources/gitops-config/sync-app/templates/.*\\.yaml$"
+    "fileMatch": [
+      "resources/gitops-config/sync-app/templates/.*\\.yaml"
     ]
   },
 
