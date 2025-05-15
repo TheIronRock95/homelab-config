@@ -5,8 +5,14 @@
     "config:recommended"
   ],
   "dependencyDashboard": false,
-  "paths": [
-    "resources/gitops-config/sync-app/templates",
-    "resources/gitops-config/main.tf"
+  "packageRules": [
+    {
+      "matchPaths": ["^resources/gitops-config/main.tf$"],
+      "enabled": true
+    },
+    {
+      "matchPaths": ["^resources/gitops-config/sync-app/templates/"],
+      "enabled": true
+    }
   ]
 }
