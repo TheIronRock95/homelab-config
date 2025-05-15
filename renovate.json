@@ -23,9 +23,5 @@
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch"
     }
-  ],
-  
-  "includePaths": [
-    "resources/gitops-config/sync-app/templates/**"
   ]
 } 
