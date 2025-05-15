@@ -11,7 +11,8 @@
       "enabled": true
     },
     {
-      "matchPaths": ["^resources/gitops-config/sync-app/templates/"],
+      "matchManagers": ["yaml"],
+      "matchPaths": ["^resources/gitops-config/sync-app/templates/.*\\.ya?ml$"],
       "enabled": true
     }
   ]
