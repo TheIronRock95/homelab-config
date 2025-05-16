@@ -1,34 +1,34 @@
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "5"
-#   name: longhorn
-#   namespace: argocd
-#   labels:
-#     component: operators
-#   finalizers:
-#   - resources-finalizer.argocd.argoproj.io
-# spec:
-#   project: operators
-#   sources:
-#   - repoURL: https://charts.longhorn.io
-#     chart: longhorn
-#     targetRevision: 1.8.1
-#     helm:
-#       valueFiles:
-#       - $values/resources/gitops-config/operators/longhorn/values.yaml
-#   - repoURL: https://github.com/TheIronRock95/homelab-config
-#     targetRevision: HEAD
-#     path: resources/gitops-config/operators/longhorn
-#     ref: values
-#   destination:
-#     namespace: longhorn-system
-#     server: https://kubernetes.default.svc
-#   syncPolicy:
-#     syncOptions:
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  name: longhorn
+  namespace: argocd
+  labels:
+    component: operators
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: operators
+  sources:
+  - repoURL: https://charts.longhorn.io
+    chart: longhorn
+    targetRevision: 1.8.1
+    helm:
+      valueFiles:
+      - $values/resources/gitops-config/operators/longhorn/values.yaml
+  - repoURL: https://github.com/TheIronRock95/homelab-config
+    targetRevision: HEAD
+    path: resources/gitops-config/operators/longhorn
+    ref: values
+  destination:
+    namespace: longhorn-system
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
