@@ -11,12 +11,12 @@ metadata:
 spec:
   project: apps
   sources:
-  - repoURL: https://charts.zigbee2mqtt.io/
-    chart: zigbee2mqtt
-    targetRevision: 2.3.0
-    helm:
-      valueFiles:
-      - $values/apps/zigbee2mqtt/values.yaml
+  # - repoURL: https://charts.zigbee2mqtt.io/
+  #   chart: zigbee2mqtt
+  #   targetRevision: 2.3.0
+  #   helm:
+  #     valueFiles:
+  #     - $values/apps/zigbee2mqtt/values.yaml
   - repoURL: https://github.com/TheIronRock95/homelab-apps
     targetRevision: HEAD
     path: apps/zigbee2mqtt
