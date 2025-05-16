@@ -9,7 +9,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: operators
+  project: default
   source:
     repoURL: https://github.com/TheIronRock95/homelab-config
     path: resources/gitops-config/sync-app/templates/

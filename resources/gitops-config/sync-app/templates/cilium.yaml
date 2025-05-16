@@ -6,8 +6,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
   name: cilium
   namespace: argocd
-  labels:
-    component: operators
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:

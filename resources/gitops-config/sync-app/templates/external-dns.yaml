@@ -6,8 +6,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
   name: external-dns
   namespace: argocd
-  labels:
-    component: operators
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
