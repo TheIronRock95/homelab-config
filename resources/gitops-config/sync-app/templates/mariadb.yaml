@@ -14,13 +14,13 @@ spec:
   - repoURL: https://charts.bitnami.com/bitnami
     chart: mariadb
     targetRevision: 20.5.5
-    helm:
-      valueFiles:
-      - $values/apps/mariadb/values.yaml
-  - repoURL: https://github.com/TheIronRock95/homelab-apps
-    targetRevision: HEAD
-    path: apps/mariadb
-    ref: values
+  #   helm:
+  #     valueFiles:
+  #     - $values/apps/mariadb/values.yaml
+  # - repoURL: https://github.com/TheIronRock95/homelab-apps 
+  #   targetRevision: HEAD
+  #   path: apps/mariadb
+  #   ref: values
   destination:
     namespace: mariadb
     server: https://kubernetes.default.svc
