@@ -1,32 +1,32 @@
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "6"
-#   name: mariadb
-#   namespace: argocd
-#   finalizers:
-#   - resources-finalizer.argocd.argoproj.io
-# spec:
-#   project: apps
-#   sources:
-#   - repoURL: https://charts.bitnami.com/bitnami
-#     chart: bitnami/mariadb
-#     targetRevision: 20.5.5
-#     helm:
-#       valueFiles:
-#       - $values/apps/mariadb/values.yaml
-#   - repoURL: https://github.com/TheIronRock95/homelab-apps 
-#     targetRevision: HEAD
-#     path: apps/mariadb
-#     ref: values
-#   destination:
-#     namespace: mariadb
-#     server: https://kubernetes.default.svc
-#   syncPolicy:
-#     syncOptions:
-#       - CreateNamespace=true
-#     automated:
-#       prune: true
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+  name: mariadb
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  sources:
+  - repoURL: https://charts.bitnami.com/bitnami
+    chart: bitnami/mariadb
+    targetRevision: 20.5.5
+    helm:
+      valueFiles:
+      - $values/apps/mariadb/values.yaml
+  - repoURL: https://github.com/TheIronRock95/homelab-apps 
+    targetRevision: HEAD
+    path: apps/mariadb
+    ref: values
+  destination:
+    namespace: mariadb
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
