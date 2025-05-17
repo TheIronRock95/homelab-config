@@ -12,7 +12,7 @@ spec:
   project: apps
   sources:
   - repoURL: https://charts.bitnami.com/bitnami
-    chart: mariadb
+    chart: bitnami/mariadb
     targetRevision: 20.5.5
     # helm:
     #   valueFiles:
