@@ -53,11 +53,11 @@ singleBinary:
 
   resources:
     requests:
-      cpu: 25m
-      memory: 128Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: 200m
-      memory: 512Mi
+      cpu: 500m
+      memory: 1Gi
 
   tolerations:
     - key: node-role.kubernetes.io/control-plane
