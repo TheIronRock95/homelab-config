@@ -8,6 +8,12 @@ providerRegex: "^prd-(cp|w)-\\d+$"
 providerIpPrefixes:
   - 10.0.10.0/24
 
+# Node hostnames (prd-cp-XX, prd-w-XX) have no DNS record anywhere in the
+# homelab -- they only resolve via IP. Without this, the approver denies
+# every kubelet-serving CSR with "SAN DNS Name could not be resolved",
+# eventually letting kubelet serving certs expire.
+bypassDnsResolution: true
+
 # HA deployment
 replicas: 2
 leaderElection: true
